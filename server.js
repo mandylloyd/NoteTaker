@@ -26,7 +26,7 @@ app.post("/api/notes", function(req, res){
     //create the new note variable and push it to the notes array
     var title = req.body.title
     var text = req.body.text
-    var id = req.body.id = Math.floor(Math.random() * Math.floor(1000000));
+    var id = Math.floor(Math.random() * Math.floor(1000000));
     var newNote = {title, text, id};
     // req.body.id = randomID();
     // var id = req.body.id;
@@ -57,7 +57,7 @@ app.get("/api/notes", function(req, res) {
     })
 });
 
-app.delete("api/notes", function(req,res)  {
+app.delete("/api/notes", function(req,res)  {
     //or should this be thisId = id ?
     let thisId = req.body.id
     let deleteThisId = notes.filter(del => del.id !== thisId)

@@ -10,7 +10,7 @@ let activeNote = {};
 // A function for getting all notes from the db
 const getNotes = () => {
   return $.ajax({
-    url: "/api/notes",
+    url: "api/notes",
     method: "GET",
   });
 };
@@ -18,7 +18,7 @@ const getNotes = () => {
 // A function for saving a note to the db
 const saveNote = (note) => {
   return $.ajax({
-    url: "/api/notes",
+    url: "api/notes",
     data: note,
     method: "POST",
   });
