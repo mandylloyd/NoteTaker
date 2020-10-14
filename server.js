@@ -26,8 +26,11 @@ app.post("/api/notes", function(req, res){
     //create the new note variable and push it to the notes array
     var title = req.body.title
     var text = req.body.text
-    var newNote = {title, text};
-        console.log(newNote)
+    var id = req.body.id = Math.floor(Math.random() * Math.floor(1000000));
+    var newNote = {title, text, id};
+    // req.body.id = randomID();
+    // var id = req.body.id;
+            console.log(newNote)
     notes.push(newNote);
         console.log(notes);
     //stringify the notes array
@@ -55,28 +58,29 @@ app.get("/api/notes", function(req, res) {
 });
 
 app.delete("api/notes", function(req,res)  {
-    // get note id of what is being deleted
-    // for loop to find matching id in db.json
-    // filter out deleted note
-    // redefine notes variable
+    //or should this be thisId = id ?
+    let thisId = req.body.id
+    let deleteThisId = notes.filter(del => del.id !== thisId)
+    notes = deleteThisId
+    let notesString = JSON.stringify(notes)
 
-    fs.readFile(path.join(__dirname, "/db/db.json"), notesString, function(err, data) {
+    // "utf8" not needed because notesString is there
+    fs.writeFile(path.join(__dirname, "/db/db.json"), notesString, function(err){
         if (err) {
-            console.log("Something went wrong.")
+            console.log(err)
         }
-        console.log("New note has been added to db.json.")
+        res.writeHead(200)
+        res.end()
     })
-});
+})
 
 
 // maybe a random number assigned to an id variable when a note is posted?
-function randomID() {
-var setID = ""
-  const generateNumber = () => {
-      return Math.floor(Math.random() * 100 + 1);
-  }
-  var setID = generateNumber()
-}
+// function randomID() {
+//     var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+//     var uniqId = randLetter + Date.now();
+//     console.log(uniqId)
+// }
 
 
 // ROUTES
