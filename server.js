@@ -26,7 +26,7 @@ app.post("/api/notes", function(req, res){
     //create the new note variable and push it to the notes array
     var title = req.body.title
     var text = req.body.text
-    var id = Math.floor(Math.random() * Math.floor(1000000));
+    var id = Math.floor(Math.random() * Math.floor(10000));
     var newNote = {title, text, id};
     // req.body.id = randomID();
     // var id = req.body.id;
@@ -57,22 +57,23 @@ app.get("/api/notes", function(req, res) {
     })
 });
 
-app.delete("/api/notes", function(req,res)  {
-    //or should this be thisId = id ?
-    let thisId = req.body.id
-    let deleteThisId = notes.filter(del => del.id !== thisId)
-    notes = deleteThisId
-    let notesString = JSON.stringify(notes)
-
-    // "utf8" not needed because notesString is there
-    fs.writeFile(path.join(__dirname, "/db/db.json"), notesString, function(err){
-        if (err) {
-            console.log(err)
-        }
-        res.writeHead(200)
-        res.end()
-    })
-})
+app.delete("/api/notes/:id", function(req, res) {
+    data = fs.readFileSync("./db/db.json", "utf8"); 
+    data = JSON.parse(data); 
+    let notesString = data.filter(function(notesId){ 
+        return notesId.id != req.params.id; 
+    }); 
+    data = JSON.stringify(notesString); 
+    fs.writeFile("./db/db.json", data, "utf8", function(err){ 
+        if (err){ 
+          throw err;
+    }
+    }); 
+  
+      notes = JSON.parse(data)
+      res.send(notes)
+  
+  }); 
 
 
 // maybe a random number assigned to an id variable when a note is posted?
