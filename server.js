@@ -1,6 +1,6 @@
 // Dependencies
 var express = require("express")
-// requiring path is necessary for using sendFile vvvv
+// requiring path is necessary for using sendFile
 var path = require("path");
 var fs = require("fs");
 
@@ -21,6 +21,7 @@ app.use(express.static('public'))
 // create empty notes array
 var notes = [];
 
+// POST
 // push new note to notes array
 app.post("/api/notes", function(req, res){
     //create the new note variable and push it to the notes array
@@ -28,9 +29,7 @@ app.post("/api/notes", function(req, res){
     var text = req.body.text
     var id = Math.floor(Math.random() * Math.floor(10000));
     var newNote = {title, text, id};
-    // req.body.id = randomID();
-    // var id = req.body.id;
-            console.log(newNote)
+        console.log(newNote)
     notes.push(newNote);
         console.log(notes);
     //stringify the notes array
@@ -45,6 +44,7 @@ app.post("/api/notes", function(req, res){
     })
 });
 
+// GET
 app.get("/api/notes", function(req, res) {
     fs.readFile(path.join(__dirname, "/db/db.json"), "utf8" ,function(err, data) {
         if (err) {
@@ -57,6 +57,7 @@ app.get("/api/notes", function(req, res) {
     })
 });
 
+// DELETE
 app.delete("/api/notes/:id", function(req, res) {
     data = fs.readFileSync("./db/db.json", "utf8"); 
     data = JSON.parse(data); 
@@ -76,34 +77,21 @@ app.delete("/api/notes/:id", function(req, res) {
   }); 
 
 
-// maybe a random number assigned to an id variable when a note is posted?
-// function randomID() {
-//     var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
-//     var uniqId = randLetter + Date.now();
-//     console.log(uniqId)
-// }
-
-
 // ROUTES
 
 //sends notes page
 app.get("/notes", function(req, res) {
-    // res.send("Welcome to the Star Wars Page!");
-    // using sendFile you can return the selected html page
     res.sendFile(path.join(__dirname, "/public/notes.html"));
   });
 
 //sends main index html page
 app.get("*", function(req, res) {
-    // res.send("Welcome to the Star Wars Page!");
-    // using sendFile you can return the selected html page
     res.sendFile(path.join(__dirname, "/public/index.html"));
   });
 
 
 
 // Listener
-// ===========================================================
 app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });
