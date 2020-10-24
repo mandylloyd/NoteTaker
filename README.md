@@ -4,6 +4,7 @@
 
 This is a note taking application to easily write and save important notes, and delete them. It's designed to help the user stay organized. This application uses express to interact with a local database. The heroku deployment of this app can be found at: https://arcane-escarpment-59358.herokuapp.com/
 
+# Table of Contents
 1. Table of Contents
 2. Description
 3. Installation
@@ -13,17 +14,17 @@ This is a note taking application to easily write and save important notes, and 
 7. Contributing
 8. Questions
 
-Installation
+# Installation
 Run an npm install.
 
-License
+# License
 No additional licenses are needed for this application.
 
 
-Testing
+# Testing
 There is no testing for this app.
 
 
-Questions
+# Questions
 https://github.com/mandylloyd
 mandylloyd@gmail.com
